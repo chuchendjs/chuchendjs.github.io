@@ -1,0 +1,28 @@
+
+.fa-image{
+    color: rgb(224, 61, 88);
+}
+
+/* 最新文章 */
+.card-history-animation {
+    color: rgb(34, 218, 241);
+}
+/* 分类 */
+.fa-folder-open{
+    color: rgba(186, 6, 231);
+}
+/* 文章日历 */
+.fa-calendar-alt{
+   color: #ff7242;
+}
+/* 时间轴-归档 */
+.fa-archive{
+    color: rgb(62, 14, 236);
+}
+/* 标签 */
+/* .fa-tags{
+
+} */
+.fa-chart-line{
+    color: rgb(207, 13, 224);
+}
