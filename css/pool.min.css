@@ -27,6 +27,7 @@ audio {
     outline: 0
 }
 
+/* 背景 */
 #web_bg {
     background: -webkit-linear-gradient(0deg, rgba(247, 149, 51, .1) 0, rgba(243, 112, 85, .1) 15%, rgba(239, 78, 123, .1) 30%, rgba(161, 102, 171, .1) 44%, rgba(80, 115, 184, .1) 58%, rgba(16, 152, 173, .1) 72%, rgba(7, 179, 155, .1) 86%, rgba(109, 186, 130, .1) 100%);
     background: -moz-linear-gradient(0deg, rgba(247, 149, 51, .1) 0, rgba(243, 112, 85, .1) 15%, rgba(239, 78, 123, .1) 30%, rgba(161, 102, 171, .1) 44%, rgba(80, 115, 184, .1) 58%, rgba(16, 152, 173, .1) 72%, rgba(7, 179, 155, .1) 86%, rgba(109, 186, 130, .1) 100%);
@@ -34,7 +35,6 @@ audio {
     background: -ms-linear-gradient(0deg, rgba(247, 149, 51, .1) 0, rgba(243, 112, 85, .1) 15%, rgba(239, 78, 123, .1) 30%, rgba(161, 102, 171, .1) 44%, rgba(80, 115, 184, .1) 58%, rgba(16, 152, 173, .1) 72%, rgba(7, 179, 155, .1) 86%, rgba(109, 186, 130, .1) 100%);
     background: linear-gradient(90deg, rgba(247, 149, 51, .1) 0, rgba(243, 112, 85, .1) 15%, rgba(239, 78, 123, .1) 30%, rgba(161, 102, 171, .1) 44%, rgba(80, 115, 184, .1) 58%, rgba(16, 152, 173, .1) 72%, rgba(7, 179, 155, .1) 86%, rgba(109, 186, 130, .1) 100%)
 }
-
 #aside_content .card-widget,
 #recent-posts>.recent-post-item,
 .layout_page>div:first-child:not(.recent-posts),
@@ -43,12 +43,12 @@ audio {
 .read-mode .layout_post>#post {
     background: var(--light_bg_color)
 }
-
 [data-theme=dark] #nav,
 [data-theme=dark] .layout_page>div:first-child:not(.recent-posts),
 [data-theme=dark] .layout_post>#post {
     background-color: var(--dark_bg_color)
 }
+/* bc-end */
 
 span.inline-tag {
     display: inline;
@@ -202,7 +202,7 @@ p.top {
     width: auto;
     min-width: 50%
 } */
-
+/* 友链接 */
 @keyframes link_custom {
     from {
         box-shadow: 0 0 5px var(--primary-color, grey), inset 0 0 5px var(--primary-color, grey), 0 1px 0 var(--primary-color, grey)
@@ -1917,3 +1917,49 @@ div.snote.blue::before {
 }
 }
 /* endheat */
+/* mac代码框美化 */
+#article-container figure.highlight,
+#article-container pre {
+    color: #aaa8a3;
+    background: #f3f3f3    /*中间代码的背景颜色*/
+}
+
+#article-container figure.highlight .highlight-tools {
+    color: #e9b125;
+    background: #eee
+}
+
+#article-container figure.highlight .gutter pre {
+    color: hsla(30, 1%, 74%, 0.952);
+    background: #f3f3f3
+}
+
+#article-container figure.highlight figcaption a {
+    color: #f3f3f3 !important
+}
+/* end-mac */
+
+/* aside 图标美化 */
+.fa-image{
+    color: rgb(224, 61, 88);
+}
+/* 最新文章 */
+.card-history-animation {
+    color: rgb(34, 218, 241);
+}
+/* 分类 */
+.fa-folder-open{
+    color: rgba(186, 6, 231);
+}
+/* 文章日历 */
+.fa-calendar-alt{
+   color: #ff7242;
+}
+/* 时间轴-归档 */
+.fa-archive{
+    color: rgb(62, 14, 236);
+}
+.fa-chart-line{
+    color: rgb(207, 13, 224);
+}
+/* end-aside */
