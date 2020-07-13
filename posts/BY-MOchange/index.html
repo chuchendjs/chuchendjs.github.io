@@ -490,48 +490,41 @@ if (autoChangeMode === '1') {
 <p>安装该插件后第一次打开网站不弹窗，后续更新将会弹窗</p>
 </div></li>
 </ol>
-</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">bt-sonny</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chuchendjs.github.io/posts/BY-MOchange/">https://chuchendjs.github.io/posts/BY-MOchange/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chuchendjs.github.io" target="_blank">初辰の揽月</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/butterfly/">butterfly</a></div><div class="post_share"><div class="social-share" data-image="/img/post.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><button class="reward-button" type="button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/reward/wechat.png" alt="wechat" onclick="window.open('/img/reward/wechat.png')"/><div class="post-qr-code__desc">wechat</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/reward/alipay.png" alt="alipay" onclick="window.open('/img/reward/alipay.png')"/><div class="post-qr-code__desc">alipay</div></li></ul></div></button></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/Music/"><img class="prev-cover" data-src="/img/post.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">全局添加吸底音乐APlayer</div></div></a></div><div class="next-post pull-right"><a href="/posts/valine-comment/"><img class="next-cover" data-src="https://cdn.jsdelivr.net/gh/chuchendjs/picgo/picgo/valine2.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Valine 添加验证码，博主标签及评论邮件通知</div></div></a></div></nav><hr><div id="post-comment"><div class="comment-head"><div class="comment-headling"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"><span class="slider"></span></label><span class="second-comment">Gitalk</span></div></div><div class="comment-wrap"><div class="comments-items-1" data-name="Valine"><div class="vcomment" id="vcomment"></div><script>function loadvaline () {  
-  var requestSetting = function (from,set) {
-    var from = from
-    var setting = set.split(',').filter(function(item){
-    return from.indexOf(item) > -1
-    });
-    setting = setting.length == 0 ? from :setting;
-    return setting
-  }
-
-  var guestInfo = requestSetting(['nick','mail','link'],'nick,mail,link')
-  var requiredFields = requestSetting(['nick','mail'],'nick,mail')
-
-  function initValine () {
-    window.valine = new Valine({
-      el:'#vcomment',
-      appId: 'KzchER3EJmadkyu0vL6sFxis-gzGzoHsz',
-      appKey: '13HVUImPPqUXAvazf6qPxYls',
-      placeholder: 'Please leave your footprints',
-      avatar: 'monsterid',
-      meta: guestInfo,
-      pageSize: '10',
-      lang: 'zh-CN',
-      recordIP: false,
-      serverURLs: '',
-      emojiCDN: '',
-      emojiMaps: "",
-      enableQQ: true,
-      requiredFields: requiredFields
-    });
-  }
-  loadScript('https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js', initValine)
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">bt-sonny</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chuchendjs.github.io/posts/BY-MOchange/">https://chuchendjs.github.io/posts/BY-MOchange/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chuchendjs.github.io" target="_blank">初辰の揽月</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/butterfly/">butterfly</a></div><div class="post_share"><div class="social-share" data-image="/img/post.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><button class="reward-button" type="button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/reward/wechat.png" alt="wechat" onclick="window.open('/img/reward/wechat.png')"/><div class="post-qr-code__desc">wechat</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/reward/alipay.png" alt="alipay" onclick="window.open('/img/reward/alipay.png')"/><div class="post-qr-code__desc">alipay</div></li></ul></div></button></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/Music/"><img class="prev-cover" data-src="/img/post.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">全局添加吸底音乐APlayer</div></div></a></div><div class="next-post pull-right"><a href="/posts/valine-comment/"><img class="next-cover" data-src="https://cdn.jsdelivr.net/gh/chuchendjs/picgo/picgo/valine2.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Valine 添加验证码，博主标签及评论邮件通知</div></div></a></div></nav><hr><div id="post-comment"><div class="comment-head"><div class="comment-headling"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"><span class="slider"></span></label><span class="second-comment">Gitalk</span></div></div><div class="comment-wrap"><div class="comments-items-1" data-name="Valine"><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js"></script><script>var requestSetting = function (from,set) {
+  var from = from
+  var setting = set.split(',').filter(function(item){
+  return from.indexOf(item) > -1
+  });
+  setting = setting.length == 0 ? from :setting;
+  return setting
 }
 
-if ('Valine' === 'Valine' || true) {
-  window.addEventListener('load', loadvaline)
-}
-else {
-  function loadOtherComment () {
-    loadvaline()
-  }
-}</script></div><div class="comments-items-2" data-name="Gitalk"><div id="gitalk-container"></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5/js/md5.min.js"></script><script>function loadGitalk () {
+var guestInfo = requestSetting(['nick','mail','link'],'nick,mail,link')
+var requiredFields = requestSetting(['nick','mail'],'nick,mail')
+let friends = 'e8dcbd2322a566aa286411af0cdd8e8c'.split(',')
+let master = 'f836e33cb73b725cafe2756c75b9c844'.split(',')
+
+window.valine = new Valine({
+  el:'#vcomment',
+  master:'f836e33cb73b725cafe2756c75b9c844',
+  friends:'e8dcbd2322a566aa286411af0cdd8e8c',
+  appId: 'zNcQWLxF5x3DtAxhR20vJWPl-MdYXbMMI',
+  appKey: 'O9SzTSiimAQY5cYmfQNo8lqk',
+  placeholder: 'Please leave your footprints',
+  avatar: 'monsterid',
+  meta: guestInfo,
+  pageSize: '10',
+  lang: 'zh-CN',
+  recordIP: false,
+  serverURLs: '',
+  emojiCDN: '',
+  emojiMaps: "",
+  enableQQ: true,
+  requiredFields: requiredFields,
+  master: master,
+  friends: friends,
+  metaPlaceholder: {"nick":"昵称/QQ号(必填)","mail":"邮箱(必填)","link":"网址(https://)"}
+});</script></div><div class="comments-items-2" data-name="Gitalk"><div id="gitalk-container"></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5/js/md5.min.js"></script><script>function loadGitalk () {
   const ele = document.createElement('link')
   ele.rel = 'stylesheet'
   ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
