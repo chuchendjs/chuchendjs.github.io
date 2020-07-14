@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>valine-admin Qmsg酱 邮件通知 | 初辰の揽月</title><meta name="description" content="前言上个版本之前，也就是2.3.5版本 ，根据懒人大佬 写里一篇 Valine添加验证码、博主标签及评论QQ通知 没有 Qmsg酱 (QQ 评论提醒)、Server酱 (微信评论提醒) 这里建议配置Qmsg酱 (QQ 评论提醒)，Server酱 (微信评论提醒)-&gt;不建议，因为微信嘛，这在前端有个漏洞，就不说，难免有些不全！ 项目地址：小康大佬我的也贴出来：初辰定制 说明：如果你配置的话建议"><meta name="keywords" content="valine-admin 配置"><meta name="author" content="bt-sonny"><meta name="copyright" content="bt-sonny"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://chuchendjs.github.io/posts/valine-Qmsg/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta property="og:type" content="article"><meta property="og:title" content="valine-admin Qmsg酱 邮件通知"><meta property="og:url" content="https://chuchendjs.github.io/posts/valine-Qmsg/"><meta property="og:site_name" content="初辰の揽月"><meta property="og:description" content="前言上个版本之前，也就是2.3.5版本 ，根据懒人大佬 写里一篇 Valine添加验证码、博主标签及评论QQ通知 没有 Qmsg酱 (QQ 评论提醒)、Server酱 (微信评论提醒) 这里建议配置Qmsg酱 (QQ 评论提醒)，Server酱 (微信评论提醒)-&gt;不建议，因为微信嘛，这在前端有个漏洞，就不说，难免有些不全！ 项目地址：小康大佬我的也贴出来：初辰定制 说明：如果你配置的话建议"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/chuchendjs/picgo/picgo/valine-server.png"><meta property="article:published_time" content="2020-07-14T07:03:10.531Z"><meta property="article:modified_time" content="2020-07-14T11:16:53.894Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="next" title="初辰的butterfly主题使用手册" href="https://chuchendjs.github.io/posts/MoButterfly-USE/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: {"text":"富强,民主,文明,和谐,自由,平等,公正,法治,爱国,敬业,诚信,友善","fontSize":"15px"},
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: true,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-07-14 19:16:53'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><div class="aplayer" data-id="5065294585" data-server="netease" data-type="playlist" data-fixed="true" data-listFolded="false" data-order="random" data-preload="none"></div><link rel="stylesheet" href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css"><script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@1.2.0/dist/Meting.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/chuchendjs/HBJC@master/css/pool.min.css"><link rel="stylesheet" href="/css/other.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/chuchendjs/HBJC@master/css/font-awesome-animation.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/chuchendjs/HBJC@master/css/iconfont.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/chuchendjs/HBJC@master/css/buttons.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/chuchendjs/HBJC@master/css/VolantisTags.css"><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="https://img-blog.csdnimg.cn/2020050623061368.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">20</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">19</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page"><i class="fa-fw fas fa-list"></i><span> 媒体</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/bangumis/"><i class="fa-fw fab fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li><li><a class="site-page" href="/books/"><i class="fa-fw fa-fw fa fa-book"></i><span> 书单</span></a></li><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/box/"><i class="fa-fw fab fa-xbox  faa-spin animated"></i><span> 聚宝盒</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw far fa-comment"></i><span> 微语</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/gallery/"><i class="fa-fw far fa-image"></i><span> 相册</span></a></li><li><a class="site-page" href="/home/"><i class="fa-fw fab fa-phoenix-framework"></i><span> 主页</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-bars"></i><span> 小功能</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/animated/"><i class="fa-fw fa fa-bath faa-float animated"></i><span> 动图预览</span></a></li><li><a class="site-page" href="/background/"><i class="fa-fw fa fa-paint-brush"></i><span> 背景调节</span></a></li><li><a class="site-page" href="/emoji/"><i class="fa-fw far fa-kiss-wink-heart"></i><span> emoji表情</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-user-circle faa-spin animated faa-slow"></i><span> 关于</span></a></div></div></div></div><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#操作"><span class="toc-number">2.</span> <span class="toc-text">操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#部署前获取的密钥"><span class="toc-number">2.1.</span> <span class="toc-text">部署前获取的密钥</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Server-酱-SCKEY-获取"><span class="toc-number">2.1.1.</span> <span class="toc-text">Server 酱 SCKEY 获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#申请-Server-酱"><span class="toc-number">2.1.2.</span> <span class="toc-text">申请 Server 酱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AKISMET-KEY-获取"><span class="toc-number">2.1.3.</span> <span class="toc-text">AKISMET_KEY 获取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署项目"><span class="toc-number">2.2.</span> <span class="toc-text">部署项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建-LeanCloud-应用"><span class="toc-number">2.2.1.</span> <span class="toc-text">创建 LeanCloud 应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始部署项目"><span class="toc-number">2.2.2.</span> <span class="toc-text">开始部署项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绑定评论管理的域名"><span class="toc-number">2.2.3.</span> <span class="toc-text">绑定评论管理的域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加环境变量"><span class="toc-number">2.2.4.</span> <span class="toc-text">添加环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义环境变量"><span class="toc-number">2.2.5.</span> <span class="toc-text">自定义环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防止服务器休眠"><span class="toc-number">2.2.6.</span> <span class="toc-text">防止服务器休眠</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置-butterfly-yml-文件"><span class="toc-number">2.3.</span> <span class="toc-text">配置 butterfly.yml 文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">3.</span> <span class="toc-text">参考</span></a></li></ol></div></div></div><div id="body-wrap"><div id="web_bg" data-type="color"></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/chuchendjs/picgo/picgo/valine-server.png)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">初辰の揽月</a></span><span class="pull-right menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page"><i class="fa-fw fas fa-list"></i><span> 媒体</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/bangumis/"><i class="fa-fw fab fa-youtube"></i><span> 番剧</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> 电影</span></a></li><li><a class="site-page" href="/books/"><i class="fa-fw fa-fw fa fa-book"></i><span> 书单</span></a></li><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/box/"><i class="fa-fw fab fa-xbox  faa-spin animated"></i><span> 聚宝盒</span></a></div><div class="menus_item"><a class="site-page" href="/artitalk/"><i class="fa-fw far fa-comment"></i><span> 微语</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/gallery/"><i class="fa-fw far fa-image"></i><span> 相册</span></a></li><li><a class="site-page" href="/home/"><i class="fa-fw fab fa-phoenix-framework"></i><span> 主页</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/contact/"><i class="fa-fw fas fa-coffee"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-bars"></i><span> 小功能</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/animated/"><i class="fa-fw fa fa-bath faa-float animated"></i><span> 动图预览</span></a></li><li><a class="site-page" href="/background/"><i class="fa-fw fa fa-paint-brush"></i><span> 背景调节</span></a></li><li><a class="site-page" href="/emoji/"><i class="fa-fw far fa-kiss-wink-heart"></i><span> emoji表情</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-user-circle faa-spin animated faa-slow"></i><span> 关于</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">valine-admin Qmsg酱 邮件通知</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2020-07-14 15:03:10"><i class="far fa-calendar-alt fa-fw"></i> 发表于 2020-07-14</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-07-14 19:16:53"><i class="fas fa-history fa-fw"></i> 更新于 2020-07-14</span></time><span class="post-meta__categories"><span class="post-meta__separator">|</span><i class="fas fa-inbox fa-fw post-meta__icon"></i><a class="post-meta__categories" href="/categories/Hexo/">Hexo</a></span></div><div class="meta-secondline"> <span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta__icon"></i><span>字数总计:</span><span class="word-count">2k</span><span class="post-meta__separator">|</span><i class="far fa-clock fa-fw post-meta__icon"></i><span>阅读时长: 7 分钟</span></span></div><div class="meta-thirdline"><span class="post-meta-pv-cv"><span class="post-meta__separator">|</span><i class="far fa-eye fa-fw post-meta__icon"></i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span><span class="post-meta__separator">|</span><i class="far fa-comments fa-fw post-meta__icon"></i><span>评论数:</span><a href="/posts/valine-Qmsg/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count comment-count" data-xid="/posts/valine-Qmsg/" itemprop="commentCount"></span></a></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上个版本之前，也就是<span class="inline-tag blue">2.3.5版本</span> ，根据<a href="https://blog.hclonely.com/posts/409d3090/" target="_blank" rel="noopener"><font color="#f47466">懒人大佬</font></a> 写里一篇 <a class="btn-beautify button--animated outline blue larger" href="http://chuchendjs.github.io/posts/valine-comment/" 
+  title="Valine添加验证码、博主标签及评论QQ通知"><i class="far fa-hand-point-right fa-fw"></i><span>Valine添加验证码、博主标签及评论QQ通知</span></a><br> 没有 <font color="#f47466">Qmsg酱</font> (QQ 评论提醒)、<font color="#f47466">Server酱</font> (微信评论提醒)</p>
+<p>这里建议配置<font color="#f47466">Qmsg酱</font> (QQ 评论提醒)，<font color="#f47466">Server酱</font> (微信评论提醒)-&gt;不建议，因为微信嘛，这在前端有个漏洞，就不说，难免有些不全！</p>
+<p>项目地址：<a class="btn-beautify button--animated outline orange larger" href="https://github.com/sviptzk/Valine-Admin-Server.git" 
+  title="小康大佬"><i class="far fa-hand-point-right fa-fw"></i><span>小康大佬</span></a><br>我的也贴出来：<a class="btn-beautify button--animated outline red larger" href="https://github.com/chuchendjs/Valine-Admin-Server-master.git" 
+  title="初辰定制"><i class="far fa-hand-point-right fa-fw"></i><span>初辰定制</span></a></p>
+<p class='div-border yellow'>说明：如果你配置的话建议使用<font color="#f47466">小康大佬</font>的，毕竟咋还是要尊重原创嘛！我定制的就修改了一下参数还有浏览器适配等，具体与原创不会有太大的区别。</p>
+
+<p>要完成此次配置需要做些什么呢？</p>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>有<font color=#f47466>LeanCloud</font> 账号，并且创建了应用</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>在<font color=#f47466>LeanCloud</font> 应用部署项目，并且配置云引擎变量</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>绑定后台，这个可选</p>
+            </div>
+<div class='checkbox yellow checked'><input type="checkbox" checked="checked"/>
+            <p>评论标签，引入<font color=#f47466>valine.min.js</font></p>
+            </div>
+<div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>
+            <p>申请<font color=#f47466>Qmsg酱</font>，并配置云引擎变量</p>
+            </div>
+<div class='checkbox blue checked'><input type="checkbox" checked="checked"/>
+            <p>创建定时器，防止服务器休眠</p>
+            </div>
+
+<h1 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h1><h2 id="部署前获取的密钥"><a href="#部署前获取的密钥" class="headerlink" title="部署前获取的密钥"></a>部署前获取的密钥</h2><h3 id="Server-酱-SCKEY-获取"><a href="#Server-酱-SCKEY-获取" class="headerlink" title="Server 酱 SCKEY 获取"></a>Server 酱 SCKEY 获取</h3><p>Qmsg 的官网为：<a href="https://qmsg.zendee.cn/" target="_blank" rel="noopener"><font color="#49b1f5">官网</font></a>, 进入官网，登录账号（qq 或者神邸用户都可以）。</p>
+<ol>
+<li><p>选择并添加一个消息发送者，并填写你接受消息的 qq 号。（可以使用小号登录，大号接收）<br><img src= "/img/loading.gif" data-src="https://img-blog.csdnimg.cn/20200714161207147.png" alt=""></p>
+</li>
+<li><p>点击右上角文档<br>把 <font color="#f47466">send</font> 后面的 <font color="#f47466">key</font> 复制到 <font color="#f47466">LeanCloud</font> 的 <font color="#f47466">QMSG_KEY</font> 环境变量后保存即可<br><img src= "/img/loading.gif" data-src="https://img-blog.csdnimg.cn/20200714161630110.png" alt=""></p>
+</li>
+</ol>
+<h3 id="申请-Server-酱"><a href="#申请-Server-酱" class="headerlink" title="申请 Server 酱"></a>申请 Server 酱</h3><p>与 Qmsg 类似<br>官网：<a class="btn-beautify button--animated outline pink larger" href="http://sc.ftqq.com/3.version" 
+  title="Qmsg 酱"><i class="far fa-hand-point-right fa-fw"></i><span>Qmsg 酱</span></a></p>
+<h3 id="AKISMET-KEY-获取"><a href="#AKISMET-KEY-获取" class="headerlink" title="AKISMET_KEY 获取"></a>AKISMET_KEY 获取</h3><p class='div-border blue'><font color="#f47466">Akismet</font> (Automattic Kismet) 是应用广泛的一个垃圾留言过滤系统，其作者是大名鼎鼎的 WordPress 创始人 Matt Mullenweg，Akismet 也是 WordPress 默认安装的插件，其使用非常广泛，设计目标便是帮助博客网站来过滤留言 Spam。有了 Akismet 之后，基本上不用担心垃圾留言的烦恼了。
+启用 Akismet 后，当博客再收到留言会自动将其提交到 Akismet 并与 Akismet 上的黑名单进行比对，如果名列该黑名单中，则该条留言会被标记为垃圾评论且不会发布。</p>
+
+<p>如果你用过 WordPress 你应该有 <font color="#f47466">Akismet Key</font>；如果还没有，你可以去 <a href="https://akismet.com/development/" target="_blank" rel="noopener"><font color="#f47466">AKISMET FOR DEVELOPERS</font></a> 免费申请一个；如果你不需要反垃圾评论，<font color="#f47466">Akismet Key</font> 环境变量可以忽略。</p>
+<h2 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h2><p>这里主要是告诉你如何快速部署项目。</p>
+<h3 id="创建-LeanCloud-应用"><a href="#创建-LeanCloud-应用" class="headerlink" title="创建 LeanCloud 应用"></a>创建 LeanCloud 应用</h3><div class='tip warning'><p>注意：一定要选择国际版，如果你选择的是华北或者华东的话，Valine 后台评论管理是需要备案才能绑定的<p></div>
+
+<p>登陆 <a href="https://console.leancloud.app/#/app" target="_blank" rel="noopener"><font color="#49b1f5">LeanCloud官网</font></a>，<font color="#f47466">点击创建应用</font>，填写应用昵称点(随意给，这个与应用项目部署没有太大的关系)击创建即可。</p>
+<h3 id="开始部署项目"><a href="#开始部署项目" class="headerlink" title="开始部署项目"></a>开始部署项目</h3><p>依次点击左侧的云引擎 -&gt; 部署 -&gt; 项目部署 -&gt;Git 部署 -&gt; 配置 Git。然后 Git 的地址填写：<a href="https://github.com/sviptzk/Valine-Admin-Server" target="_blank" rel="noopener"><font color="#49b1f5">https://github.com/sviptzk/Valine-Admin-Server</font></a>。然后再次点击 Git 部署 -&gt; 部署即可。</p>
+<h3 id="绑定评论管理的域名"><a href="#绑定评论管理的域名" class="headerlink" title="绑定评论管理的域名"></a>绑定评论管理的域名</h3><ol>
+<li><p>国区版<br><font color="#f47466">LeanCloud</font> 不给予免费的二级域名了，因此必须绑定备案域名。<br>点击设置-&gt;域名绑定-&gt;云引擎域名绑定</p>
+</li>
+<li><p>国际版（建议使用这个）<br><font color="#f47466">LeanCloud</font> 给予一个免费的二级域名。当然也可以绑定自己的（方式与国区版相同）。<br><img src= "/img/loading.gif" data-src="https://img-blog.csdnimg.cn/20200714172524240.png" alt=""></p>
+</li>
+</ol>
+<h3 id="添加环境变量"><a href="#添加环境变量" class="headerlink" title="添加环境变量"></a>添加环境变量</h3><p>选择云引擎–&gt; 设置–&gt; 添加自定义环境变量<br><img src= "/img/loading.gif" data-src="https://img-blog.csdnimg.cn/20200714171828732.png" alt=""></p>
+<h3 id="自定义环境变量"><a href="#自定义环境变量" class="headerlink" title="自定义环境变量"></a>自定义环境变量</h3><ol>
+<li>此变量表只针对此项目，如果使用原项目可能不生效<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SITE_NAME</td>
+<td>初辰の博客</td>
+<td><font color="#f47466">[必填]</font> 网站名称</td>
+</tr>
+<tr>
+<td>SITE_URL</td>
+<td><font color="#49b1f5"><a href="https://chuchendjs.github.io">https://chuchendjs.github.io</a></font></td>
+<td><font color="#f47466">[必填]</font> 网站地址</td>
+</tr>
+<tr>
+<td>SMTP_USER</td>
+<td><font color="#49b1f5"><a href="mailto:2036556725@qq.com">2036556725@qq.com</a></font></td>
+<td><font color="#f47466">[必填]</font> 邮箱地址</td>
+</tr>
+<tr>
+<td>SMTP_PASS</td>
+<td>123456789</td>
+<td><font color="#f47466">[必填]</font> 邮箱授权码(部分邮箱服务商默认开启 SMTP)(如果没有授权码可直接填写邮箱密码)</td>
+</tr>
+<tr>
+<td>SMTP_SERVICE</td>
+<td>QQ</td>
+<td><font color="#f47466">[必填]</font> 邮箱服务商查询相关详细</td>
+</tr>
+<tr>
+<td>SENDER_NAME</td>
+<td>初辰</td>
+<td><font color="#f47466">[必填]</font>寄件人名称</td>
+</tr>
+<tr>
+<td>TEMPLATE_NAME</td>
+<td>rainbow</td>
+<td><font color="#f47466">[必填]</font> 设置提醒邮件的主题,看下方有主题模板</td>
+</tr>
+<tr>
+<td>ADMIN_URL</td>
+<td><font color="#49b1f5"><a href="https://bt-sonny.leanapp.cn" target="_blank" rel="noopener">https://bt-sonny.leanapp.cn</a></font></td>
+<td><font color="#f47466">[可选]</font> 后台管理地址</td>
+</tr>
+<tr>
+<td>SCKEY</td>
+<td>SCU100890xxxxxx293e1xxx9dbfe82axxxx2dc</td>
+<td><font color="#f47466">[可选]</font> server 酱的 SCKEY(微信提醒)</td>
+</tr>
+<tr>
+<td>QMSG_KEY</td>
+<td>fdexxxx42a1xxx28f16d5xxxxa00</td>
+<td><font color="#f47466">[可选]</font> Qmsg 酱的密钥</td>
+</tr>
+<tr>
+<td>QQ</td>
+<td>123456789</td>
+<td></td>
+</tr>
+<tr>
+<td>QQ_SHAKE</td>
+<td>true</td>
+<td><font color="#f47466">[可选]</font> 填写代表发送 QQ 戳一戳</td>
+</tr>
+<tr>
+<td>INFO</td>
+<td><font color="#f47466"><p style='color:red'>test<p></font></td>
+<td><font color="#f47466">[可选]</font> 自定义信息输出，支持 HTML 代码,LeanCloud 控制台日志信息输出</td>
+</tr>
+<tr>
+<td>favicon</td>
+<td><font color="#49b1f5"><a href="https://cdn.jsdelivr.net/gh/chuchendjs/picgo/picgo/favicon.ico" target="_blank" rel="noopener">https://cdn.jsdelivr.net/gh/chuchendjs/picgo/picgo/favicon.ico</a></font></td>
+<td><font color="#f47466">[可选]</font> 网页 favicon 图标</td>
+</tr>
+<tr>
+<td>TO_EMAIL</td>
+<td><font color="#49b1f5"><font color="#49b1f5"><a href="mailto:2036556725@qq.com">2036556725@qq.com</a></font></td>
+<td><font color="#f47466">[可选]</font> 博主通知收件地址，默认使用 SMTP_USER</td>
+</tr>
+<tr>
+<td>SPAM_WORDS</td>
+<td>检测的内容，如：单号，物流</td>
+<td><font color="#f47466">[可选]</font> 需要对屏蔽的关键词，关键词用半角逗号分隔</td>
+</tr>
+<tr>
+<td>MAIN_COLOR</td>
+<td><font color="#f47466">#f47466</font></td>
+<td><font color="#f47466">[可选]</font> 仅针对 custom2 模板主题的主要颜色</td>
+</tr>
+<tr>
+<td>MAIN_IMG</td>
+<td><font color="#49b1f5"><a href="https://cdn.jsdelivr.net/gh/chuchendjs/picgo/picgo/pg4.png" target="_blank" rel="noopener">https://cdn.jsdelivr.net/gh/chuchendjs/picgo/picgo/pg4.png</a></font></td>
+<td><font color="#f47466">[可选]</font> 仅针对 custom2 模板主题的头图</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<ol start="2">
+<li><p>当使用自定义邮件服务器时（需将 SMTP_SERVICE 变量删掉哦！）</p>
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SMTP_HOST</td>
+<td>邮件服务提供商 SMTP 地址，此项需要自行查询或询问其服务商。</td>
+<td><font color="#f47466">smtp.ym.163.com</font></td>
+</tr>
+<tr>
+<td>SMTP_PORT</td>
+<td>邮件服务提供商 SMTP 端口，此项需要自行查询或询问其服务商。</td>
+<td>994</td>
+</tr>
+<tr>
+<td>SMTP_SECURE</td>
+<td>是否启用加密，默认为 <font color="#f47466">true</font>，一般不需要设置，如有特殊请自行配置。 此项需要自行查询或询问其服务商。</td>
+<td>true</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>此项目的主题字段</p>
+<table>
+<thead>
+<tr>
+<th>主题</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>default</td>
+<td>默认主题</td>
+</tr>
+<tr>
+<td>rainbow</td>
+<td>原版的 <font color="#f47466">rainbow</font></td>
+</tr>
+<tr>
+<td>custom1</td>
+<td>基于🎉梨花町の肾兄さん🎉的模板</td>
+</tr>
+<tr>
+<td>custom2</td>
+<td>对 <font color="#f47466">custom1</font> 的改进版</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>添加完成后，点击保存。并且重新部署实例。(以后每变更一次变量都要重新部署一次)<br>点击云引擎-&gt;部署-&gt;Git部署-&gt;分支默认master就好了-&gt;部署即可</p>
+</li>
+</ol>
+<h3 id="防止服务器休眠"><a href="#防止服务器休眠" class="headerlink" title="防止服务器休眠"></a>防止服务器休眠</h3><p>创建定时任务： 点击云引擎-&gt;定时任务-&gt;创建定时任务</p>
+<ol>
+<li><p>定时检查 24 小时内漏发的邮件通知<br>生产环境选择 <font color="#f47466">resend_mails</font><br>选择 Cron表达式时间自己调整 <font color="#f47466">0 10 23 * * ?</font> （每天早上7点10检查过去24小时内漏发的通知邮件）</p>
+</li>
+<li><p>自动唤醒<br>生产环境选择 <font color="#f47466">self_wake</font><br>选择 Cron表达式时间自己调整 <font color="#f47466">0 */25 0-15,23 * * ?</font> （每天早7点到晚23点每隔25分钟访问云引擎）</p>
+</li>
+</ol>
+<h2 id="配置-butterfly-yml-文件"><a href="#配置-butterfly-yml-文件" class="headerlink" title="配置 butterfly.yml 文件"></a>配置 <font color="#f47466">butterfly.yml</font> 文件</h2><ol>
+<li><p>valine 配置如下：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">valine:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">appId:</span>  <span class="comment"># leancloud application app id</span></span><br><span class="line">  <span class="attr">appKey:</span>  <span class="comment"># leancloud application app key</span></span><br><span class="line">  <span class="attr">pageSize:</span> <span class="number">10</span> <span class="comment"># comment list page size</span></span><br><span class="line">  <span class="attr">avatar:</span> <span class="string">monsterid</span> <span class="comment"># gravatar style https://valine.js.org/#/avatar</span></span><br><span class="line">  <span class="attr">lang:</span> <span class="string">zh-CN</span> <span class="comment"># i18n: zh-CN/zh-TW/en/ja</span></span><br><span class="line">  <span class="attr">placeholder:</span> <span class="string">Please</span> <span class="string">leave</span> <span class="string">your</span> <span class="string">footprints</span> <span class="comment"># valine comment input placeholder(like: Please leave your footprints )</span></span><br><span class="line">  <span class="attr">guest_info:</span> <span class="string">nick,mail,link</span> <span class="comment">#valine comment header info (nick/mail/link)</span></span><br><span class="line">  <span class="attr">recordIP:</span> <span class="literal">false</span> <span class="comment"># Record reviewer IP</span></span><br><span class="line">  <span class="attr">serverURLs:</span>  <span class="comment"># This configuration is suitable for domestic custom domain name users, overseas version will be automatically detected (no need to manually fill in)</span></span><br><span class="line">  <span class="attr">bg:</span>  <span class="comment"># valine background</span></span><br><span class="line">  <span class="attr">emojiCDN:</span> <span class="comment"># emoji CDN</span></span><br><span class="line">  <span class="attr">enableQQ:</span> <span class="literal">true</span> <span class="comment"># enable the Nickname box to automatically get QQ Nickname and QQ Avatar</span></span><br><span class="line">  <span class="attr">requiredFields:</span> <span class="string">nick,mail</span> <span class="comment"># required fields (nick/mail)</span></span><br><span class="line">  <span class="attr">tagMeta:</span> <span class="string">'博主,小伙伴,访客'</span></span><br><span class="line">  <span class="attr">friends:</span> <span class="comment"># 你的小伙伴的邮箱md5加密，怎么加密自行百度</span></span><br><span class="line">  <span class="attr">master:</span> <span class="comment"># 你的邮箱md5加密</span></span><br><span class="line">  <span class="attr">metaPlaceholder:</span> <span class="comment"># 这个参数是新增的新版本需要到valine.pug修改</span></span><br><span class="line">      <span class="attr">nick:</span> <span class="string">昵称/QQ号(必填)</span></span><br><span class="line">      <span class="attr">mail:</span> <span class="string">邮箱(必填)</span></span><br><span class="line">      <span class="attr">link:</span> <span class="string">网址(https://)</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改 valine.pug 模板，<font color="#f47466">themes\Butterfly\layout\includes\comments\valine.pug</font> 添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">window.valine &#x3D; new Valine(&#123;</span><br><span class="line">  el:&#39;#vcomment&#39;,</span><br><span class="line">  master:&#39;#&#123;theme.valine.master&#125;&#39;,</span><br><span class="line">  friends:&#39;#&#123;theme.valine.friends&#125;&#39;,</span><br><span class="line">  appId: &#39;#&#123;theme.valine.appId&#125;&#39;,</span><br><span class="line">  appKey: &#39;#&#123;theme.valine.appKey&#125;&#39;,</span><br><span class="line">  metaPlaceholder: !&#123;JSON.stringify(theme.valine.metaPlaceholder)&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>需要自定义表情可以到官方查看,支持<font color="#f47466">json</font>格式，示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">emojiMaps:&#123;</span><br><span class="line">      &quot;bili_tv_gif_抓狂&quot; : &quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;blogimg&#x2F;emotion&#x2F;bili_tv_gif&#x2F;抓狂.gif&quot;,&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>需要添加 <font color="#f47466">博主</font>， <font color="#f47466">小伙伴</font>， <font color="#f47466">访客</font>标签的话可以引入下面的<font color="#f47466">js</font>即可。<br><font color="#49b1f5"> <a href="https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js" target="_blank" rel="noopener">https://cdn.jsdelivr.net/gh/HCLonely/Valine@latest/dist/Valine.min.js</a> </font><br>我的个人定制就不给出了，用<font color="#f47466">懒人大佬</font>的就好了。</p>
+</li>
+</ol>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><font color="#f47466">小康大佬</font>：<a class="btn-beautify button--animated green larger" href="https://www.antmoe.com/posts/2380732b/index.html" 
+  title="Valine 评论之 Valine-admin 配置攻略"><i class="far fa-hand-point-right fa-fw"></i><span>Valine 评论之 Valine-admin 配置攻略</span></a></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">bt-sonny</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chuchendjs.github.io/posts/valine-Qmsg/">https://chuchendjs.github.io/posts/valine-Qmsg/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chuchendjs.github.io" target="_blank">初辰の揽月</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/valine-admin-%E9%85%8D%E7%BD%AE/">valine-admin 配置</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/chuchendjs/picgo/picgo/valine-server.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><button class="reward-button" type="button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="post-qr-code__img" src="/img/reward/wechat.png" alt="wechat" onclick="window.open('/img/reward/wechat.png')"/><div class="post-qr-code__desc">wechat</div></li><li class="reward-item"><img class="post-qr-code__img" src="/img/reward/alipay.png" alt="alipay" onclick="window.open('/img/reward/alipay.png')"/><div class="post-qr-code__desc">alipay</div></li></ul></div></button></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/MoButterfly-USE/"><img class="next-cover" data-src="/img/post.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">初辰的butterfly主题使用手册</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/posts/valine-comment/" title="Valine 添加验证码，博主标签及评论邮件通知"><img class="relatedPosts_cover" data-src="https://cdn.jsdelivr.net/gh/chuchendjs/picgo/picgo/valine2.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-10</div><div class="relatedPosts_title">Valine 添加验证码，博主标签及评论邮件通知</div></div></a></div></div></div><hr><div id="post-comment"><div class="comment-head"><div class="comment-headling"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"><span class="slider"></span></label><span class="second-comment">Gitalk</span></div></div><div class="comment-wrap"><div class="comments-items-1" data-name="Valine"><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/gh/chuchendjs/Valine@master/dist/Valine.min.js"></script><script>var requestSetting = function (from,set) {
+  var from = from
+  var setting = set.split(',').filter(function(item){
+  return from.indexOf(item) > -1
+  });
+  setting = setting.length == 0 ? from :setting;
+  return setting
+}
+
+var guestInfo = requestSetting(['nick','mail','link'],'nick,mail,link')
+var requiredFields = requestSetting(['nick','mail'],'nick,mail')
+let friends = 'e8dcbd2322a566aa286411af0cdd8e8c'.split(',')
+let master = 'f836e33cb73b725cafe2756c75b9c844'.split(',')
+
+window.valine = new Valine({
+  el:'#vcomment',
+  master:'f836e33cb73b725cafe2756c75b9c844',
+  friends:'e8dcbd2322a566aa286411af0cdd8e8c',
+  appId: 'zNcQWLxF5x3DtAxhR20vJWPl-MdYXbMMI',
+  appKey: 'O9SzTSiimAQY5cYmfQNo8lqk',
+  placeholder: 'Please leave your footprints',
+  avatar: 'monsterid',
+  meta: guestInfo,
+  pageSize: '10',
+  lang: 'zh-CN',
+  recordIP: false,
+  serverURLs: '',
+  emojiCDN: '',
+  emojiMaps: "",
+  enableQQ: true,
+  requiredFields: requiredFields,
+  master: master,
+  friends: friends,
+  metaPlaceholder: {"nick":"昵称/QQ号(必填)","mail":"邮箱(必填)","link":"网址(https://)"},
+  emojiMaps:{
+    "bili_tv_gif_抓狂" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/抓狂.gif",
+    "bili_tv_gif_再见" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/再见.gif",
+    "bili_tv_gif_晕" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/晕.gif",
+    "bili_tv_gif_疑问" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/疑问.gif",
+    "bili_tv_gif_斜眼笑" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/斜眼笑.gif",
+    "bili_tv_gif_笑哭" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/笑哭.gif",
+    "bili_tv_gif_无奈" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/无奈.gif",
+    "bili_tv_gif_委屈" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/委屈.gif",
+    "bili_tv_gif_微笑" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/微笑.gif",
+    "bili_tv_gif_吐血" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/吐血.gif",
+    "bili_tv_gif_偷笑" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/偷笑.gif",
+    "bili_tv_gif_思考" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/思考.gif",
+    "bili_tv_gif_睡着" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/睡着.gif",
+    "bili_tv_gif_生气" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/生气.gif",
+    "bili_tv_gif_生病" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/生病.gif",
+    "bili_tv_gif_色" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/色.gif",
+    "bili_tv_gif_亲亲" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/亲亲.gif",
+    "bili_tv_gif_呕吐" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/呕吐.gif",
+    "bili_tv_gif_难过" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/难过.gif",
+    "bili_tv_gif_腼腆" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/腼腆.gif",
+    "bili_tv_gif_流汗" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/流汗.gif",
+    "bili_tv_gif_流鼻血" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/流鼻血.gif",
+    "bili_tv_gif_困" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/困.gif",
+    "bili_tv_gif_抠鼻子" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/抠鼻子.gif",
+    "bili_tv_gif_可爱" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/可爱.gif",
+    "bili_tv_gif_惊吓" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/惊吓.gif",
+    "bili_tv_gif_坏笑" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/坏笑.gif",
+    "bili_tv_gif_黑人问号" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/黑人问号.gif",
+    "bili_tv_gif_害羞" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/害羞.gif",
+    "bili_tv_gif_鼓掌" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/鼓掌.gif",
+    "bili_tv_gif_尴尬" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/尴尬.gif",
+    "bili_tv_gif_发怒" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/发怒.gif",
+    "bili_tv_gif_发财" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/发财.gif",
+    "bili_tv_gif_调皮" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/调皮.gif",
+    "bili_tv_gif_点赞" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/点赞.gif",
+    "bili_tv_gif_呆" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/呆.gif",
+    "bili_tv_gif_大佬" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/大佬.gif",
+    "bili_tv_gif_大哭" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/大哭.gif",
+    "bili_tv_gif_打脸" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/打脸.gif",
+    "bili_tv_gif_馋" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/馋.gif",
+    "bili_tv_gif_闭嘴" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/闭嘴.gif",
+    "bili_tv_gif_鄙视" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/鄙视.gif",
+    "bili_tv_gif_白眼" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/白眼.gif",
+    "bili_tv_gif_doge" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/bili_tv_gif/doge.gif",
+    "custom_20" : "https://cdn.jsdelivr.net/gh/blogimg/emotion/custom/19.webp"}
+});</script></div><div class="comments-items-2" data-name="Gitalk"><div id="gitalk-container"></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5/js/md5.min.js"></script><script>function loadGitalk () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+
+  loadScript('https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js', function () {
+    var gitalk = new Gitalk({
+      clientID: '6c2f86479d8334cd2f5c',
+      clientSecret: 'c9009cfd82234ab8f1e4054d32eae1f65df214ff',
+      repo: 'chuchendjs',
+      owner: 'chuchendjs',
+      admin: ['chuchendjs'],
+      id: md5(decodeURI(location.pathname)),
+      language: 'zh-CN',
+      perPage: 10,
+      distractionFreeMode: false,
+      pagerDirection: 'last',
+      createIssueManually: true,
+      updateCountCallback: commentCount
+    })
+    gitalk.render('gitalk-container')
+  })
+
+  function commentCount(n){
+    try {
+      document.getElementsByClassName('gitalk-comment-count')[0].innerHTML= n
+    } catch (e) {
+      return false
+    }
+  }
+}
+
+if ('Valine' === 'Gitalk' || true) {
+  window.addEventListener('load', loadGitalk)
+}
+else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;$2020 <i id="heartbeat" class="fa fas fa-heartbeat"></i> bt-sonny</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://chuchendjs.github.io/">blog</a>!</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div class="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>$(function () {
+  $('span.katex-display').wrap('<div class="katex-wrap"></div>')
+})</script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/third-party/activate-power-mode.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script src="/js/third-party/ClickShowText.js"></script><script src="/js/search/local-search.js"></script><script>if (document.getElementsByClassName('mermaid').length) {
+  loadScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js',function () {
+    mermaid.initialize({
+      theme: 'default',
+  })
+})
+}</script><script src="https://cdn.jsdelivr.net/gh/chuchendjs/HBJC@master/js/pool.min.js"></script><script src="https://cdn.jsdelivr.net/gh/chuchendjs/HBJC@master/js/classify.js"></script><script src="https://cdn.jsdelivr.net/gh/chuchendjs/HBJC@master/js/calendar.js"></script><script src="https://cdn.jsdelivr.net/gh/chuchendjs/HBJC@master/js/languages.js"></script><script src="https://cdn.jsdelivr.net/gh/chuchendjs/HBJC@master/js/mouse_snow.min.js"></script><script src="https://cdn.jsdelivr.net/gh/chuchendjs/HBJC@master/js/VolantisTags.js"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
