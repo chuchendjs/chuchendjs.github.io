@@ -23,10 +23,39 @@
 /* .fa-tags{
 
 } */
-/* 推荐 */
-.fa-thumbs-up{
-    color: rgb(10, 110, 224);
-}
 .fa-chart-line{
     color: rgb(207, 13, 224);
+}
+
+.avatar-img{
+    width: 100px;
+    border-radius: 50%;
+    animation: light 4s ease-in-out infinite;
+    transition: 0.5s;
+}
+
+/* .img-full:hover {
+    transform: scale(1.15) rotate(720deg);
+} */
+
+@keyframes light {
+    0% {
+        box-shadow: 0 0 4px #ca00ff
+    }
+
+    25% {
+        box-shadow: 0 0 16px #00b5e5
+    }
+
+    50% {
+        box-shadow: 0 0 4px #00f
+    }
+
+    75% {
+        box-shadow: 0 0 16px #b1da21
+    }
+
+    100% {
+        box-shadow: 0 0 4px red
+    }
 }

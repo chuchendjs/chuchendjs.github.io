@@ -670,8 +670,10 @@
 .faa-spin.animated-hover.faa-slow:hover,
 .faa-spin.animated.faa-slow {
     -webkit-animation: spin 2.2s linear infinite;
-    animation: spin 2.2s linear infinite
-}
+    animation: spin 2.2s linear infinite;
+    /* -webkit-transform-origin:(0,100%);
+    transform-origin:(0,100%)
+} */
 
 @-webkit-keyframes float {
     0% {

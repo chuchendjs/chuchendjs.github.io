@@ -1,10 +1,10 @@
   
 (function (window, undefiend) {
-  var xkTool = function (selector, filter) {
+  var Tool = function (selector, filter) {
     return new xkTool.prototype.init(selector, filter);
   };
-  xkTool.prototype = {
-    constructor: xkTool,
+  Tool.prototype = {
+    constructor: Tool,
     init: function (bgUrl, filter) {
       this.changeBanner(bgUrl, filter);
       console.log(
@@ -27,13 +27,13 @@
       "https://ae01.alicdn.com/kf/H21b5f6b8496141a1979a33666e1074d9x.jpg",
     ],
   };
-  xkTool.extend = xkTool.prototype.extend = function (obj) {
+  Tool.extend = Tool.prototype.extend = function (obj) {
     for (var key in obj) {
       this[key] = obj[key];
     }
   };
   // 生成相关
-  xkTool.extend({
+  Tool.extend({
     /**
      * 生成随机整数 包括首尾
      * @date 2020-06-30
@@ -47,7 +47,7 @@
     },
   });
   // 工具方法
-  xkTool.extend({
+  Tool.extend({
     /**
      * 根据cookie设置背景
      * @date 2020-06-30
@@ -91,7 +91,7 @@
       } else {
         $(".full_page").css({
           backgroundImage:
-            'url("https://ae01.alicdn.com/kf/H18a4b998752a4ae68b8e85d432a5aef0l.png"), linear-gradient(60deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35)), url(' +
+            'url("https://ae01.alicdn.com/f/H18a4b998752a4ae68b8e85d432a5aef0l.png"), linear-gradient(60deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35)), url(' +
             img +
             ")",
         });
@@ -99,7 +99,7 @@
     },
   });
   // 点击交互
-  xkTool.prototype.extend({
+  Tool.prototype.extend({
     /**
      * 当点击目录时控制台输出当前文章地址加锚点
      * @date 2020-06-30
@@ -115,7 +115,7 @@
     /**
      * 当使用mac代码主题时，点击绿色按钮会出现代码框放大的效果
      * @date 2020-06-30
-     * @returns {xkTool}
+     * @returns {Tool}
      */
     codeFull: function () {
       $(".highlight-tools").append(
@@ -132,17 +132,17 @@
     },
   });
   // 视觉感受
-  xkTool.prototype.extend({
+  Tool.prototype.extend({
     /**
      * 修改主页banner图，参数传入图片地址，或者transparent
      * @date 2020-06-30
      * @param {string} [imageUrl] 可选，传入图片地址或者transparent
      * @param {boolean} filter=false 是否使用滤镜 默认不适用
-     * @returns {xkTool}
+     * @returns {Tool}
      */
     changeBanner: function (imageUrl, filter = false) {
       if (imageUrl != undefined && imageUrl.search("http") != -1) {
-        xkTool.setBanner(imageUrl, filter);
+        Tool.setBanner(imageUrl, filter);
       } else if (imageUrl == "transparent") {
         $(".full_page").css({
           background: "transparent",
@@ -173,14 +173,14 @@
       }
       if (arguments.length < 4) {
         var imgLength = this.bannerList.length;
-        num = xkTool.randomNum(0, imgLength);
+        num = Tool.randomNum(0, imgLength);
         console.log(this.bannerList[num], num);
-        xkTool.setBanner(this.bannerList[num], filter);
+        Tool.setBanner(this.bannerList[num], filter);
       } else {
-        num = xkTool.randomNum(startNum, endNum + 1);
-        xkTool.setBanner(startUrl + num + endUrl, filter);
+        num = Tool.randomNum(startNum, endNum + 1);
+        Tool.setBanner(startUrl + num + endUrl, filter);
       }
-      return xkTool;
+      return Tool;
     },
     /**
      * 手机状态下工具栏默认不展开
@@ -232,7 +232,7 @@
           web_bg.style.animation = animation;
         }
       }
-      xkTool.setColor(content_inner, opacity);
+      Tool.setColor(content_inner, opacity);
       return this;
     },
     /**
@@ -248,17 +248,17 @@
       var num;
       if (arguments.length < 4) {
         var imgLength = this.imgList.length;
-        num = xkTool.randomNum(0, imgLength);
-        xkTool.setBg(this.imgList[num]);
+        num = Tool.randomNum(0, imgLength);
+        Tool.setBg(this.imgList[num]);
       } else {
-        num = xkTool.randomNum(startNum, endNum + 1);
-        xkTool.setBg(startUrl + num + endUrl);
+        num = Tool.randomNum(startNum, endNum + 1);
+        Tool.setBg(startUrl + num + endUrl);
       }
-      return xkTool;
+      return Tool;
     },
   });
   // 元素相关
-  xkTool.prototype.extend({
+  Tool.prototype.extend({
     /**
      * 插入svg社交图标
      * @date 2020-06-30
@@ -283,7 +283,7 @@
      * @param {string} backTitle 回来时显示的标题
      * @param {string} leaveIcon 离开时显示的icon
      * @param {string} backIcon 回来时显示的icon
-     * @returns {xkTool} this
+     * @returns {Tool} this
      */
     cheatTitle: function (leaveTitle, backTitle, leaveIcon, backIcon) {
       var OriginTitle = document.title;
@@ -543,21 +543,8 @@
       });
     },
   });
-  xkTool.prototype.init.prototype = xkTool.prototype;
+  Tool.prototype.init.prototype = Tool.prototype;
 
-  window.xkTool = xkTool;
+  window.Tool = Tool;
 })(window);
-© 2020 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
- Octotree
-Login to unlock more features
+
